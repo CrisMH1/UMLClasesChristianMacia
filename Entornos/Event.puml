@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam groupInheritance 2
+
+
+Event <|-- Conference
+Event <|-- BoardMeeting
+
+Person <|-- Member
+Member <|-- BoardMember
+
+Member "0..*"-- "0..*" Event : attendsTo
+Location "1 "--"0..*" Event : isLocated In
+BoardMeeting "0..*"--" 0..*" BoardMember : attendsTo
+Person "0..* "--"0..*" Conference : attendsTo
+
+
+AAUOC o-- "0..*" Location
+AAUOC o-- "0..*  "Person
+AAUOC o--"0..*" Event
+
+
+class Conference {
+max_attendees : Integer
+}
+
+class BoardMeeting{
+}
+
+class BoardMember{
+}
+class Member{
+e-mail : String
+}
+class Person{
+name : String
+}
+
+class Location{
+description : String
+address : String
+}
+
+class AAUOC{
+{method} newLocation(l : Location) : void
+{method} newEvent(e : Event) : void
+{method} newPerson(p : Person) : void
+{method} informEvent(e : Event) : void
+{method} register(m : Member,e : Event) : void
+}
+
+class Event{
+date : Date
+description : String
+{method} assign(l : Location) : void
+}
+
+
+@enduml
